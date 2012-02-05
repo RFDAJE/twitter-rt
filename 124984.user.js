@@ -7,32 +7,6 @@
 // @include https://twitter.com/*
 // ==/UserScript==
 
-/*
-
- TODO
- ====
-
- HIGH
- ----
-
- LOW
- ---
- * replace unsafeWindow
-
-
- FEATURE
- =======
-
- * conversation replies don't have rt
- * recent tweets don't have rt
-
- KNOWN ISSUE
- ===========
-
- At the moment, this script used unsafeWindow, use the script at your own risk.
-
-*/
-
 var TwitterRT = {
     insert_rt_archor: function(e) {
         var $node = $(e.relatedNode),
