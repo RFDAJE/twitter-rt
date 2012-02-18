@@ -9,46 +9,24 @@
 
 var TwitterRT = {
     insert_rt_archor: function(e) {
-        var $node = $(e.relatedNode),
-            is_detail_pane = $node.hasClass("tweet-components"),
-            has_top_updates = $node.hasClass("js-stream-items"),
-            is_tweet_detail = $node.hasClass("components-middle"),
-            is_home_tweet = $node.hasClass("stream-item");
+        var $target = $(e.target),
+            is_actions = $target.hasClass("js-tweet-details-fixer");
 
-        if (is_detail_pane) {
-            //console.log(e);
-            e.data.that.append_rt_to_actions($(e.target), 1);
-        }
-
-        /* tweet detail page */
-        if (is_tweet_detail) {
-            e.data.that.append_rt_to_actions($(e.target), 1);
-        }
-
-        /* new update on top */
-        if (has_top_updates) {
-            /* only one send over */
-            e.data.that.append_rt_to_actions($(e.target), 1);
-        }
-
-        /* first load */
-        if (is_home_tweet) {
-            /* has two send over, second one hidden */
-            e.data.that.append_rt_to_actions($node, 2);
+        if (is_actions) {
+            e.data.that.append_rt_to_actions($target, 1);
         }
     },
 
     rt_action_template: function() {
-        return ['<a class="rt-action" title="RT" href="#">',
-                '<span>', '<i></i>', '<b>RT</b>', '</span>', '</a>'].join("");
+        return ['<li class="action-quote-container">',
+                '<a class="with-icn js-action-quote" title="RT" href="#">',
+                '<i class="action-quote"></i>', '<b>RT</b>', '</a>',
+                '</li>'].join("");
     },
 
     append_rt_to_actions: function($target, len) {
-        /* put searching tweet actionis outside if, is too slow */
-        $tweet_actions = $target.find(".tweet-actions");
-        if ($tweet_actions.length === len) {
-            $(this.rt_action_template()).appendTo($tweet_actions);
-        }
+        $tweet_actions = $target.find(".actions");
+        $(this.rt_action_template()).appendTo($tweet_actions);
     },
 
     click_rt: function(e) {
@@ -119,7 +97,7 @@ var TwitterRT = {
 
 
 /* rt css style, normal 999, hover 333 */
-GM_addStyle(".tweet-actions a.rt-action span i {width: 16px;height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AIFEhwzojOe8wAAARtJREFUOMvtUrFKxFAQnHkYK00lJzZyFhZaWPgXfoBNQBCveAHB2Nj7AXJN5G4PtVME8Q8sxE+wFRFLC6sr7lJlbJIzxGdv4Va7+2bm7Q4L/EcwzKxvZg/t/nA47JnZa7M3FyA/AVhL03S1RT4nuV+WZfdXATO7BLARx/Fyi3zgnDssimIly7LPoECe55ske5J2kyRRE0TyStJZlmUf7YldnURRdAQAaZreNwGDwWCPJCTdhfxyjV+2JZU/AM7tVO/vIYHZCpK6JN1oNBpLmpJc996PAdR+vJlZRHLLe/8SmqA2Z5FkR1K/qqeSRHKB5DyAi+AKkh6lmXcCsFTltyTZwHWCApPJ5BjAcwWakjypTL2RdP3N1+nfOvsvSo5zRVSqwVIAAAAASUVORK5CYII=);} .tweet-actions a.rt-action:hover span i {width: 16px; height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3AIFEiojNpgf4gAAAV9JREFUOMvtkjFLw1AQx+/ynprStE27CKF+A6fSGF7aSqAOfoBuDl0EQRBxsrgITjo5uhUEEcTBpTgFE4s4OPsdjOLg0OJLyOM5aOVRg7ODN9397u7/7h0H8G+Z5rrukeu6D9Pc87yu4ziRyqga9Ho9GobhTRzHC5VKZVnNMcaOR6PRVqFQWFE5UQMhxKUQwjZNc9H3/ecJb7VaO5zz/WKx2AyC4C5z7Ha7vVqr1SRjbF3lnU5nvl6vJ4yx06w+beKMx+MNRIRqtXqtFkRR1JVSzlBKB78KAMASIoJlWUItSNPUAQAol8tpv9+fnRbAiWPbNhdCzCEiIKI0DKMZhuF9o9G45Zx/LzSfz28Oh8OTHxNomvaK+KknpcQkSQ6+Fvuivsg5P8z8AiHkQkqp5t4BAHK53PkUjzMFPM/b1XX9jBDCKaWPpVJpGwAgCIIrwzD2CCFvlNInXdfX/tbZfwDFeXJ9QZcrQQAAAABJRU5ErkJggg==);}");
+GM_addStyle(".actions a.js-action-quote i {width: 16px;height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcAhIWLBAV1R6IAAAA6klEQVQoz4WRsS6EQRSFv9nEqndF2EhEpdBoeABReQJqWoVa6SU8Ap1E4glEdIpV20LyJ9tJFMiG+ylm5t+/4lT3zDlzcudMUv5Er50E3juKwAdiRvjtHvhgxcQVMBsinDoEz1v5DsDbbAg/Z4vgdQkLHwEca0lwHzxpb8esD95kguEYwLfWcAGuVoJ6LK47xxp4VkkPvE8wAvPTflIDLrc8dClPbtoYTgDsgwdqoA5rMw7Ul05Xh3mH3XnbTrvVOwhRrzpHahzlOYit2sNpkS/V0NgulmcjlchXGjYYlWUST3yxwwIp/ffdv0kw9aGJP+G2AAAAAElFTkSuQmCC);}");
 
 /* filter tweet bodies */
 $(window).on("DOMNodeInserted", "", {"that": TwitterRT},
