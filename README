@@ -8,6 +8,11 @@ KNOWN ISSUE
 
 At the moment, this script used unsafeWindow, use the script at your own risk.
 
+COMPATIBILITY
+=============
+
+Tested only on Linux with Firefox 10
+
 CREDITS
 =======
 
