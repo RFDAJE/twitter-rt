@@ -59,7 +59,7 @@ var TwitterRT = {
     },
 
     tweet_text: function($tweet, screen_name) {
-        var $tweet_text = $tweet.find(".tweet-text"),
+        var $tweet_text = $tweet.find(".js-tweet-text"),
             children = $tweet_text.contents(),
             len = children.length,
             texts = [], tmp, $child,
@@ -104,6 +104,6 @@ $(window).on("DOMNodeInserted", "", {"that": TwitterRT},
     TwitterRT.insert_rt_archor);
 
 /* react on RT click */
-$(window).on("mousedown", ".rt-action", {"that":TwitterRT},
+$(window).on("mousedown", ".js-action-quote", {"that":TwitterRT},
     TwitterRT.click_rt);
 
