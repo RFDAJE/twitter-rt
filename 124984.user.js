@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.1
+// @version 0.2
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -10,10 +10,22 @@
 var TwitterRT = {
     insert_rt_archor: function(e) {
         var $target = $(e.target),
-            is_actions = $target.hasClass("js-tweet-details-fixer");
+            is_single_page_tweet = $target.hasClass("component"),
+            component_type = $target.attr("data-component-term"),
+            is_reply_tweet = $target.hasClass("simple-tweet"),
+            is_timeline_tweet = $target.hasClass("js-tweet-details-fixer");
 
-        if (is_actions) {
-            e.data.that.append_rt_to_actions($target, 1);
+
+        if (is_timeline_tweet) {
+            e.data.that.append_rt_to_actions($target);
+        }
+
+        if (is_single_page_tweet && component_type === "tweet") {
+            e.data.that.append_rt_to_actions($target);
+        }
+
+        if (is_reply_tweet) {
+            e.data.that.append_rt_to_actions($target);
         }
     },
 
@@ -24,9 +36,9 @@ var TwitterRT = {
                 '</li>'].join("");
     },
 
-    append_rt_to_actions: function($target, len) {
-        $tweet_actions = $target.find(".actions");
-        $(this.rt_action_template()).appendTo($tweet_actions);
+    append_rt_to_actions: function($target) {
+        var $tweet_actions = $target.find(".action-fav-container");
+        $(this.rt_action_template()).insertAfter($tweet_actions);
     },
 
     click_rt: function(e) {
@@ -96,8 +108,13 @@ var TwitterRT = {
 }
 
 
+var quote_perforate_ff = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcAhIWLBAV1R6IAAAA6klEQVQoz4WRsS6EQRSFv9nEqndF2EhEpdBoeABReQJqWoVa6SU8Ap1E4glEdIpV20LyJ9tJFMiG+ylm5t+/4lT3zDlzcudMUv5Er50E3juKwAdiRvjtHvhgxcQVMBsinDoEz1v5DsDbbAg/Z4vgdQkLHwEca0lwHzxpb8esD95kguEYwLfWcAGuVoJ6LK47xxp4VkkPvE8wAvPTflIDLrc8dClPbtoYTgDsgwdqoA5rMw7Ul05Xh3mH3XnbTrvVOwhRrzpHahzlOYit2sNpkS/V0NgulmcjlchXGjYYlWUST3yxwwIp/ffdv0kw9aGJP+G2AAAAAElFTkSuQmCC"
+
+var quote_perforate_f6 = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcAhMOICerVGEmAAAA+ElEQVQoz4WRvS4FURSFvzNBZEhurp8wCtEpNbzBLbyB+wBajVLpCXTiFTQK8QZCp0BLQnKFThRfNM5WzNy5U3FOc9ba66zstXcy+PMU7SuAr04lAImiAwdlj5tW8MJqOUfCMMx+uAQeGc29AvDSwDCr8+B5U8zeAvhg1IJwAO63v7Oz4EWNMHsP4GcrOAarMZoicSKs02vbOwP2ujGvS6gg6iw/5QhiucWGiyBvyU1HZp8BnAF3DTOGC7WZ2Dd8mszKYZ1ixwn13h29faMADssJtwIOx46s1T2EBw11apgNtxr8aE6N5SsjNqiavSTu+GabaVL6b92/McO6ZwUIyE4AAAAASUVORK5CYII="
+
 /* rt css style, normal 999, hover 333 */
-GM_addStyle(".actions a.js-action-quote i {width: 16px;height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfcAhIWLBAV1R6IAAAA6klEQVQoz4WRsS6EQRSFv9nEqndF2EhEpdBoeABReQJqWoVa6SU8Ap1E4glEdIpV20LyJ9tJFMiG+ylm5t+/4lT3zDlzcudMUv5Er50E3juKwAdiRvjtHvhgxcQVMBsinDoEz1v5DsDbbAg/Z4vgdQkLHwEca0lwHzxpb8esD95kguEYwLfWcAGuVoJ6LK47xxp4VkkPvE8wAvPTflIDLrc8dClPbtoYTgDsgwdqoA5rMw7Ul05Xh3mH3XnbTrvVOwhRrzpHahzlOYit2sNpkS/V0NgulmcjlchXGjYYlWUST3yxwwIp/ffdv0kw9aGJP+G2AAAAAElFTkSuQmCC);}");
+GM_addStyle(".tweet .actions a.js-action-quote i {width: 16px;height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,"+quote_perforate_ff+");}");
+GM_addStyle(".simple-tweet .actions a.js-action-quote i {width: 16px;height: 16px;background-repeat: no-repeat;background-image: url(data:image/png;base64,"+quote_perforate_f6+");}");
 
 /* filter tweet bodies */
 $(window).on("DOMNodeInserted", "", {"that": TwitterRT},
