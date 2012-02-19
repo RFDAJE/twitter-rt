@@ -1,22 +1,14 @@
- TODO
- ====
+HOMEPAGE
+========
 
- HIGH
- ----
+https://github.com/seenxu/twitter-rt
 
- LOW
- ---
- * replace unsafeWindow
+KNOWN ISSUE
+===========
 
+At the moment, this script used unsafeWindow, use the script at your own risk.
 
- FEATURE
- =======
+CREDITS
+=======
 
- * conversation replies don't have rt
- * recent tweets don't have rt
-
- KNOWN ISSUE
- ===========
-
- At the moment, this script used unsafeWindow, use the script at your own risk.
-
+use http://raphaeljs.com/icons/#quote as rt icon
