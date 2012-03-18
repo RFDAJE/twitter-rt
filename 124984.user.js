@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.2.1
+// @version 0.2.3
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -44,11 +44,21 @@ var TwitterRT = {
     click_rt: function(e) {
         var $current_target = $(e.currentTarget),
             $tweet_wrap = e.data.that.find_tweet($current_target, 1),
-            $tweet, tweet_id, screen_name, tweet_text;
+            $tweet, $orgi_tweet, $simple_tweet, tweet_id, screen_name,
+            tweet_text;
 
         if (!$tweet_wrap) return;
 
-        $tweet = $tweet_wrap.find(".original-tweet");
+        $orgi_tweet = $tweet_wrap.find(".original-tweet");
+        $simple_tweet = $tweet_wrap.find(".simple-tweet");
+
+        if ($orgi_tweet.length) {
+            $tweet = $orgi_tweet;
+        }
+
+        if (!$orgi_tweet.length && $simple_tweet.length) {
+            $tweet = $simple_tweet;
+        }
 
         if (!$tweet) return;
 
