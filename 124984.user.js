@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.2.3
+// @version 0.2.4
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -69,14 +69,13 @@ var TwitterRT = {
 
         tweet_text = e.data.that.tweet_text($tweet, screen_name);
 
-        new unsafeWindow.twttr.widget.TweetDialog({
+        (new unsafeWindow.twttr.widget.TweetDialog({
+            draggable: 0,
             template: {title: "Quote @" + screen_name},
-            defaultContent: tweet_text,
-        }).open().focus();
+            defaultContent: "",
+        })).open().focus();
 
-        $(".twttr-dialog .tweet-button"
-            ).removeClass("disabled"
-            ).addClass("primary-btn");
+        $(".twttr-dialog textarea").val(tweet_text);
     },
 
     tweet_text: function($tweet, screen_name) {
