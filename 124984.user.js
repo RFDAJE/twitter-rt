@@ -21,7 +21,6 @@ var TwitterRT = {
 
         e.data.that.set_rt_icon_background_color();
         if (is_timeline_tweet || is_click_on_tweet || is_reply_tweet || is_component_node) {
-            e.data.that.set_rt_icon_background_color();
             e.data.that.append_rt_to_actions($target);
         }
 
