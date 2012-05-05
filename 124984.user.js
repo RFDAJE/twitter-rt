@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.3
+// @version 0.3.1
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -14,13 +14,22 @@ var TwitterRT = {
 
     insert_rt_archor: function(e) {
         var $target = $(e.target),
+            has_style = $target.hasClass("js-user-style"),
             is_component_node = $target.hasClass("component"),
             is_reply_tweet = $target.hasClass("in-reply-to"),
             is_timeline_tweet = $target.hasClass("js-stream-item"),
             is_click_on_tweet = $target.hasClass("js-tweet-details-fixer");
 
-        e.data.that.set_rt_icon_background_color();
+        if (has_style) {
+            /*
+             * each time the user js loaded means the page switched
+             */
+            e.data.that.g.rt_bg_color = "";
+            e.data.that.set_rt_icon_background_color();
+        }
+
         if (is_timeline_tweet || is_click_on_tweet || is_reply_tweet || is_component_node) {
+            e.data.that.set_rt_icon_background_color();
             e.data.that.append_rt_to_actions($target);
         }
 
