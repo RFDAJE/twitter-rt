@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.3.1
+// @version 0.3.2
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -160,9 +160,9 @@ var quote_perforate_f6_12 = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAQAAAD8fJRsAAAAAmJ
 
 GM_addStyle(".js-action-quote i {margin:1px 3px 0 0;}");
 GM_addStyle(".action-quote {width: 12px; height: 12px; background-repeat: no-repeat;}");
-GM_addStyle("i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_f6_12+");}");
-GM_addStyle(".opened-tweet i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_ff_12+");}");
-GM_addStyle(".permalink-tweet i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_ff_16+");}");
+GM_addStyle("i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_f6_12+")!important;}");
+GM_addStyle(".opened-tweet i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_ff_12+")!important;}");
+GM_addStyle(".permalink-tweet i.action-quote {background-image: url(data:image/png;base64,"+quote_perforate_ff_16+")!important;}");
 GM_addStyle(".permalink-tweet .action-quote {width: 16px; height: 16px;}");
 GM_addStyle(".permalink-tweet .js-action-quote i {margin:-1px 3px 0 0;}");
 
