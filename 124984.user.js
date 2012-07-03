@@ -2,7 +2,7 @@
 // @name twitter-rt
 // @namespace http://naonie.com/projects/twitter_rt.html
 // @description traditional rt for twitter
-// @version 0.3.2
+// @version 0.3.3
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 // @include https://twitter.com/*
 // ==/UserScript==
@@ -78,16 +78,19 @@ var TwitterRT = {
         /* on single tweet page */
         $single_tweet = $tweet_wrap.find(".permalink-tweet");
 
+        // click rt on main tweet without opened replies
         if ($orgi_tweet.length) {
             $tweet = $orgi_tweet;
         }
 
+        // click rt inside reply
         if (!$orgi_tweet.length && $simple_tweet.length) {
-            $tweet = $simple_tweet;
+            $tweet = $current_target.closest(".simple-tweet");
         }
 
-        if ($simple_tweet.length) {
-            $tweet = $simple_tweet;
+        // click rt on main tweet with replies open
+        if ($orgi_tweet.length && $simple_tweet.length) {
+            $tweet = $orgi_tweet;
         }
 
         if ($single_tweet.length) {
